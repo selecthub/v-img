@@ -82,7 +82,7 @@ export default {
       uiTimeout: null,
       handlers: {},
       thumbnails: false,
-      closeOnScroll: false
+      closeOnScroll: true
     };
   },
   watch: {
