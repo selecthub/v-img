@@ -82,6 +82,7 @@ export default {
       uiTimeout: null,
       handlers: {},
       thumbnails: false,
+      closeOnScroll: false
     };
   },
   watch: {
@@ -148,23 +149,37 @@ export default {
         }, 3500);
       }
     },
-  },
-  created() {
-    window.addEventListener('keyup', e => {
+    handleKeyUp(e) {
       // esc key and 'q' for quit
       if (e.keyCode === 27 || e.keyCode === 81) this.close();
       // arrow right and 'l' key (vim-like binding)
       if (e.keyCode === 39 || e.keyCode === 76) this.next();
       // arrow left and 'h' key (vim-like binding)
       if (e.keyCode === 37 || e.keyCode === 72) this.prev();
-    });
-    window.addEventListener('scroll', () => {
-      this.close();
-    });
-    window.addEventListener('mousemove', () => {
-      this.showUI();
-    });
+    },
+    addScrollListener() {
+      window.addEventListener('scroll', this.close);
+    },
+    removeScrollListener() {
+      window.removeEventListener('scroll', this.close)
+    }
   },
+  created() {
+    window.addEventListener('mousemove', this.showUI);
+    window.addEventListener('keyup', this.handleKeyUp)
+  },
+  updated() {
+    if (this.closeOnScroll) {
+      this.addScrollListener()
+    } else {
+      this.removeScrollListener()
+    }
+  },
+  beforeDestroy() {
+    this.removeScrollListener()
+    window.removeEventListener('mousemove', this.showUI)
+    window.removeEventListener('keyup', this.handleKeyUp)
+  }
 };
 </script>
 

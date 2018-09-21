@@ -1,7 +1,7 @@
 <template>
   <div>
     <input type="number" v-model="n" id="">
-    <img v-img src="https://unsplash.it/200/300?image=2">
+    <img v-img:v="{ closeOnScroll: true }" src="https://unsplash.it/200/300?image=2">
     <img v-img:v="{ thumbnails: false }" src="https://unsplash.it/200/300?image=324">
     <img v-img:v="{ src: `https://unsplash.it/500/300?image=${n}`}" :src="`https://unsplash.it/200/300?image=${n}`">
   </div>
